@@ -1,0 +1,82 @@
+.actionbarRed {
+  background-color: #D51A1A;
+  color: white;
+}
+
+.actionbar {
+  background-color: #fff;
+  border-bottom-width: 1;
+  border-bottom-color: rgb(201, 201, 201);
+}
+.stacklayout-actionbar{
+  height: 50;
+  /* horizontal-align: left; */
+  margin-left: 10;
+}
+.fa-actionbar {
+  font-family: FontAwesome, fontawesome-webfont;
+  padding-right: 10;
+  vertical-align: middle;
+  font-size: 20;
+}
+.background {
+  /*background-color: rgb(233, 233, 233); */
+  background-color: #ffffff;
+  height: 100%;
+  width: 100%;
+}
+.list-layout{
+  height: 100%;
+  width: 100%;
+  padding: 5;
+  padding-bottom: 50;
+}
+.search-layout{
+  width: 95%;
+  background-color: #fff;
+}
+
+.search-txt{
+  width: 85%;
+  background-color: #fff;
+}
+
+.search-icon-layout{
+  width: 100%;
+  background-color: #f7941c;
+  color: #fff;
+}
+
+.item{
+  width: 95%;
+  margin-bottom: 5;
+}
+.font-price{
+  color:#27ae60;
+}
+.font-name{
+  font-weight: 500;
+  text-align: center;
+}
+.button-layout{
+  height: 100%;
+  width: 100%;
+  vertical-align: bottom;
+}
+.button{
+  width: 100%;
+  background-color: #034f84;
+  color: white;
+  vertical-align: center;
+  text-align: center;
+}
+.confirm{
+  font-weight: bold;
+}
+.button-Selected{
+  height: 50;
+  vertical-align: center;
+  text-align: center;
+  background-color: #034f84;
+  color: #ffffff;
+}
