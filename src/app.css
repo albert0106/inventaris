@@ -15,7 +15,8 @@ This is where the vast majority of your CSS code goes. */
     opacity: 0.5;
 }
 .fa{
-    font-family: FontAwesome, fontawesome-webfont;
+    font-family: "fa-solid-900"; 
+    /* FontAwesome', fontawesome-webfont; */
 }
 .actionbar {
     padding-right: 10;

@@ -16,7 +16,8 @@ import { ModalGudang } from "./login/modal-gudang/modal-gudang.component";
     imports: [
         NativeScriptFormsModule,
         NativeScriptModule,
-        AppRoutingModule
+        AppRoutingModule,
+        DetailComponent,
     ],
     entryComponents: [
         ModalGudang

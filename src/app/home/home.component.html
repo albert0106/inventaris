@@ -1,7 +1,8 @@
 <StackLayout>
-    <StackLayout class="actionbarRed" orientation="horizontal" >
-        <StackLayout [height]='getHeight(8)' orientation="horizontal">
-            <Label text="+" style="font-size: large; color: white;" horizontalAlignment="right"></Label>
+    <StackLayout class="actionbarRed" orientation="vertical" >
+        <StackLayout [height]='getHeight(8)' orientation="horizontal" horizontalalignment="right">
+            <Label text="&#xf055;"  class="fa button" verticalalignment="bottom"  [fontSize]="getHeight(3.5)"
+                   style="margin: 5; padding: 5; color: aqua;" (tap)="onTap()"></Label>
         </StackLayout>
     </StackLayout>
 

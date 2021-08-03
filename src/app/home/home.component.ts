@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewContainerRef } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import * as platform from "tns-core-modules/platform/platform";
@@ -6,9 +6,12 @@ import { Page } from "tns-core-modules/ui/page";
 import { AlertDialogService } from "../controller/alertdialog.service";
 import { req_barang } from "../controller/barang";
 import { Barang } from "../model/barang";
+import { ModalDialogOptions, ModalDialogService } from "@nativescript/angular";
+import { ModaltambahbarangComponent } from "./modaltambahbarang/modaltambahbarang.component";
 
 @Component({
     selector: "Home",
+    providers:[ModalDialogService],
     templateUrl: "./home.component.html",
     styleUrls: ['./home.component.css']
 })
@@ -18,7 +21,8 @@ export class HomeComponent implements OnInit {
     data = []
 
     constructor(private page: Page, private routerExtensions: RouterExtensions,
-        private route: ActivatedRoute, private alertDialogService: AlertDialogService) {
+        private route: ActivatedRoute, private alertDialogService: AlertDialogService,
+        private _modalService: ModalDialogService, private _vcRef: ViewContainerRef) {
         this.page.actionBarHidden = true;
         this.route.queryParams.subscribe(params => {
             console.log(params);
@@ -63,6 +67,19 @@ export class HomeComponent implements OnInit {
         // this.data.push({ id: 2, text: "Ivysaur", qty: 0, harga: 'Rp 119000', src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png" });
         // this.data.push({ id: 3, text: "Venusaur", qty: 0, harga: 'Rp 119000', src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png" });
         // Init your component properties here.
+    }
+
+    onTap(): void {
+        const options: ModalDialogOptions = {
+            viewContainerRef: this._vcRef,
+            context: {},
+            fullscreen: true
+        };
+
+        this._modalService.showModal(ModaltambahbarangComponent, options)
+            .then((result: string) => {
+                console.log(result);
+            });
     }
 
     toDetail(id) {
