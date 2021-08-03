@@ -1,8 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ModalDialogOptions, ModalDialogService } from 'nativescript-angular';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'tns-core-modules/ui/page';
-import { req_login } from '../controller/login';
+import { cek_gudang, req_login } from '../controller/login';
 import { User } from '../model/user';
+import { ModalGudang } from './modal-gudang/modal-gudang.component';
 
 @Component({
 	moduleId: module.id,
@@ -16,12 +18,12 @@ export class LoginComponent implements OnInit {
     user: User;
     processing = false;
     @ViewChild("password", { static: false }) password: ElementRef;
-    @ViewChild("confirmPassword", { static: false }) confirmPassword: ElementRef;
 
-    constructor(private page: Page, private routerExtensions: RouterExtensions) {
+    constructor(private page: Page, private routerExtensions: RouterExtensions,
+        private modal: ModalDialogService, private viewContainerRef: ViewContainerRef) {
         this.page.actionBarHidden = true;
         this.user = new User();
-        this.user.user = "";
+        this.user.username = "";
         this.user.password = "";
     }
 
@@ -29,35 +31,50 @@ export class LoginComponent implements OnInit {
     }
 
     submit() {
-        // if (!this.user.user || !this.user.password) {
-        //     this.alert("Isi data terlebih dahulu!");
-        //     return;
-        // }
+        if (!this.user.username || !this.user.password) {
+            this.alert("Isi data terlebih dahulu!");
+            return;
+        }
 
         this.processing = true;
         this.login();
     }
 
     async login() {
-        // var result = await req_login(this.user);
+        var result = await req_login(this.user);
 
-        // if (result != false) {
-        //     console.log(result);
-
+        if (result != false) {
+            if (result.message == "User Detect.") {
+                var gudang = await cek_gudang(this.user);
+                if (gudang != false){
+                    this.processing = false;
+                    let options: ModalDialogOptions = {
+                        context: { data: gudang.data },
+                        fullscreen: false,
+                        viewContainerRef: this.viewContainerRef
+                    };
+                    this.modal.showModal(ModalGudang, options).then((res: any) => {
+                        if (res != null) {
+                            setTimeout(() => {
+                                this.routerExtensions.navigate(['/home'], {
+                                    queryParams: {
+                                        "gudang": JSON.stringify(res)
+                                    },
+                                    clearHistory: true
+                                });
+                            }, 10);
+                        }
+                    });
+                }
+                // this.routerExtensions.navigate(['/home'], { clearHistory: true });
+            } else {
+                this.processing = false;
+                this.alert("Akun anda tidak ditemukan.");
+            }
+        } else {
             this.processing = false;
-            this.routerExtensions.navigate(['/home'],{clearHistory:true});
-        // } else {
-        //     this.processing = false;
-        //     this.alert("Akun anda tidak ditemukan.");
-        // }
-        // .then(() => {
-        //     this.processing = false;
-        //     this.routerExtensions.navigate(["/item"], { clearHistory: true });
-        // })
-        // .catch(() => {
-        //     this.processing = false;
-        //     this.alert("Akun anda tidak ditemukan.");
-        // });
+            this.alert("Akun anda tidak ditemukan.");
+        }
     }
 
     focusPassword() {

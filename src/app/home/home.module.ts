@@ -1,5 +1,6 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
+import { DetailBarangComponent } from "./detail-barang/detail-barang.component";
 
 import { HomeRoutingModule } from "./home-routing.module";
 import { HomeComponent } from "./home.component";
@@ -10,7 +11,8 @@ import { HomeComponent } from "./home.component";
         HomeRoutingModule
     ],
     declarations: [
-        HomeComponent
+        HomeComponent,
+        DetailBarangComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA

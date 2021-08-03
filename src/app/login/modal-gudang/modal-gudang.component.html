@@ -1,0 +1,10 @@
+<StackLayout backgroundcolor="white">
+    <ListView [items]="data" (itemTap)="onItemTap($event)" height="100%">
+        <ng-template let-item="item">
+            <StackLayout class="stacklayout-1" verticalAlignment="center">
+                <Label [text]="item.gudang" textwrap="true"
+                    style="font-size: 20; font-style: bold;"></Label>
+            </StackLayout>
+        </ng-template>
+    </ListView>
+</StackLayout>

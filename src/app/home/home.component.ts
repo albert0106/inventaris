@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import * as platform from "tns-core-modules/platform/platform";
 import { Page } from "tns-core-modules/ui/page";
+import { req_barang } from "../controller/barang";
 import { Barang } from "../model/barang";
 
 @Component({
@@ -10,19 +12,36 @@ import { Barang } from "../model/barang";
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    data = new Array<Barang>(
-        { id: 1, nama: "Bulbasaur", qty: 0, harga: "10000" },
-        { id: 2, nama: "Ivysaur", qty: 0, harga: "10000"  },
-        { id: 3, nama: "Venusaur", qty: 0, harga: "10000"  },
-        { id: 4, nama: "Charmander", qty: 0, harga: "10000"  },
-    );
+    kirim = true;
+    temp;
+    data = []
 
-    constructor(private page: Page, private routerExtensions: RouterExtensions) {
+    constructor(private page: Page, private routerExtensions: RouterExtensions,
+        private route: ActivatedRoute,) {
         this.page.actionBarHidden = true;
+        this.route.queryParams.subscribe(params => {
+            console.log(params);
+            this.temp = JSON.parse(params["gudang"])
+        })
         // Use the component constructor to inject providers.
     }
 
-    ngOnInit(): void {
+    async ngOnInit() {
+        var result = await req_barang(this.temp)
+        if (result != false) {
+            var temp = result.data
+            var i = 0;
+            temp.map((obj=>{
+                obj['list_id'] = i
+                i++
+            }))
+
+            console.log(temp);
+
+            this.data = temp
+        } else {
+            this.alert("Akun anda tidak ditemukan.");
+        }
         // this.data.push({ text: "Bulbasaur", src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" });
         // this.data.push({ text: "Ivysaur", src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png" });
         // this.data.push({ text: "Venusaur", src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png" });
@@ -71,12 +90,12 @@ export class HomeComponent implements OnInit {
     incdec(category, id) {
         if (category == 0) {
             if (this.data[id].qty > 0) {
-                this.data[id].qty -= 1
+                this.data[id + 1].qty -= 1
                 // this.updateOrder(id, this.data[id].qty)
             }
         }
         else {
-            this.data[id].qty += 1
+            this.data[id + 1].qty += 1
             // this.updateOrder(id, this.data[id].qty)
         }
     }
@@ -115,5 +134,13 @@ export class HomeComponent implements OnInit {
 
     getWidth(percentage) {
         return platform.screen.mainScreen.widthDIPs * percentage / 100
+    }
+
+    alert(message: string) {
+        return alert({
+            title: "INVENTARIS",
+            okButtonText: "OK",
+            message: message
+        });
     }
 }

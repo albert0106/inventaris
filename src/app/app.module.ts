@@ -5,6 +5,7 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
+import { ModalGudang } from "./login/modal-gudang/modal-gudang.component";
 
 @NgModule({
     bootstrap: [
@@ -15,7 +16,11 @@ import { LoginComponent } from "./login/login.component";
         NativeScriptModule,
         AppRoutingModule
     ],
+    entryComponents: [
+        ModalGudang
+    ],
     declarations: [
+        ModalGudang,
         AppComponent,
         LoginComponent,
     ],

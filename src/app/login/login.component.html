@@ -7,7 +7,7 @@
             <GridLayout rows="auto, auto">
                 <StackLayout row="0" class="input-field">
                     <TextField class="input" hint="Username" [isEnabled]="!processing"
-                        autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.user" returnKeyType="next"
+                        autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.username" returnKeyType="next"
                         (returnPress)="focusPassword()"></TextField>
                     <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
