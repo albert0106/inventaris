@@ -1,1 +1,23 @@
-<Label class="modaltambahbarang" text="Hello ModaltambahbarangComponent!"></Label>
+<StackLayout>
+    <StackLayout class="actionbarRed" orientation="vertical" >
+        <StackLayout [height]='getHeight(8)' orientation="horizontal" horizontalalignment="center">
+            <Label class="modaltambahbarang" text="Tambah Barang" style="font-size: large; color: white;"
+                verticalalignment="Center"></Label>
+        </StackLayout>
+    </StackLayout>
+
+    <StackLayout orientation=vertical>
+        <StackLayout orientation=vertical>
+            <Label text="Nama Barang" class="textModal" [fontSize]="getHeight(2)"></Label>
+            <textfield></textfield>
+        </StackLayout>
+        <StackLayout orientation=vertical>
+            <Label text="Stok" class="textModal" [fontSize]="getHeight(2)"></Label>
+            <textfield input type="number"></textfield>
+        </StackLayout>
+        <StackLayout orientation=vertical>
+            <Label text="Tanggal Kadaluarsa" class="textModal" [fontSize]="getHeight(2)"></Label>
+            <textfield input type="number" (tap)="onTap()"></textfield>
+        </StackLayout>
+    </StackLayout>
+</StackLayout>

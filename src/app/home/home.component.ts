@@ -138,8 +138,4 @@ export class HomeComponent implements OnInit {
     getWidth(percentage) {
         return platform.screen.mainScreen.widthDIPs * percentage / 100
     }
-
-    ModalTambah(){
-        console.log("test berhasil !!");
-    }
 }
