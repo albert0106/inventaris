@@ -4,6 +4,8 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import { AlertDialogService } from "./controller/alertdialog.service";
+import { DetailComponent } from "./home/detail/detail.component";
 import { LoginComponent } from "./login/login.component";
 import { ModalGudang } from "./login/modal-gudang/modal-gudang.component";
 
@@ -23,6 +25,10 @@ import { ModalGudang } from "./login/modal-gudang/modal-gudang.component";
         ModalGudang,
         AppComponent,
         LoginComponent,
+        DetailComponent,
+    ],
+    providers: [
+        AlertDialogService,
     ],
     schemas: [
         NO_ERRORS_SCHEMA

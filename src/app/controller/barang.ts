@@ -37,36 +37,41 @@ export async function req_barang(data): Promise<any> {
     })
 }
 
-// export async function cek_gudang(user): Promise<any> {
-//     var URL = "https://mystal.xyz/ronaldiman/apis/cek_gudang.php";
+export async function req_detail_barang(id_gudang,id_barang): Promise<any> {
+    var URL = "https://mystal.xyz/ronaldiman/apis/cek_gudang.php";
 
-//     console.log(user);
+    // console.log(data);
 
-//     return new Promise((resolve, reject) => {
-//         request({
-//             url: URL,
-//             method: "POST",
-//             timeout: 10000,
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             content: JSON.stringify(user)
-//         })
-//             .then((response) => {
-//                 try {
-//                     if (response.statusCode == 200) {
-//                         var data = JSON.parse(JSON.stringify(response.content))
-//                         console.log(data);
-//                         resolve(data)
-//                     } else {
-//                         var data = JSON.parse(JSON.stringify(response.content))
-//                         resolve(false)
-//                     }
-//                 } catch (e) {
-//                     resolve(false)
-//                 }
-//             }, (e) => {
-//                 resolve(false)
-//             });
-//     })
-// }
+    var body = {
+        id_gudang: id_gudang,
+        id_barang: id_barang,
+    }
+
+    return new Promise((resolve, reject) => {
+        request({
+            url: URL,
+            method: "POST",
+            timeout: 10000,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            content: JSON.stringify(body)
+        })
+            .then((response) => {
+                try {
+                    if (response.statusCode == 200) {
+                        var data = JSON.parse(JSON.stringify(response.content))
+                        console.log(data);
+                        resolve(data)
+                    } else {
+                        var data = JSON.parse(JSON.stringify(response.content))
+                        resolve(false)
+                    }
+                } catch (e) {
+                    resolve(false)
+                }
+            }, (e) => {
+                resolve(false)
+            });
+    })
+}

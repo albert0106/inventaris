@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@ang
 import { ModalDialogOptions, ModalDialogService } from 'nativescript-angular';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'tns-core-modules/ui/page';
+import { AlertDialogService } from '../controller/alertdialog.service';
 import { cek_gudang, req_login } from '../controller/login';
 import { User } from '../model/user';
 import { ModalGudang } from './modal-gudang/modal-gudang.component';
@@ -20,11 +21,12 @@ export class LoginComponent implements OnInit {
     @ViewChild("password", { static: false }) password: ElementRef;
 
     constructor(private page: Page, private routerExtensions: RouterExtensions,
-        private modal: ModalDialogService, private viewContainerRef: ViewContainerRef) {
+        private modal: ModalDialogService, private viewContainerRef: ViewContainerRef,
+        private alertDialogService: AlertDialogService) {
         this.page.actionBarHidden = true;
         this.user = new User();
-        this.user.username = "";
-        this.user.password = "";
+        this.user.username = "unang";
+        this.user.password = "simple";
     }
 
     ngOnInit() {
@@ -32,7 +34,7 @@ export class LoginComponent implements OnInit {
 
     submit() {
         if (!this.user.username || !this.user.password) {
-            this.alert("Isi data terlebih dahulu!");
+            this.alertDialogService.alert("", "Isi data terlebih dahulu.");
             return;
         }
 
@@ -69,23 +71,15 @@ export class LoginComponent implements OnInit {
                 // this.routerExtensions.navigate(['/home'], { clearHistory: true });
             } else {
                 this.processing = false;
-                this.alert("Akun anda tidak ditemukan.");
+                this.alertDialogService.alert("Akun", "Akun anda tidak ditemukan.");
             }
         } else {
             this.processing = false;
-            this.alert("Akun anda tidak ditemukan.");
+            this.alertDialogService.alert("Akun", "Akun anda tidak ditemukan.");
         }
     }
 
     focusPassword() {
         this.password.nativeElement.focus();
-    }
-
-    alert(message: string) {
-        return alert({
-            title: "INVENTARIS",
-            okButtonText: "OK",
-            message: message
-        });
     }
 }

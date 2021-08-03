@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import * as platform from "tns-core-modules/platform/platform";
 import { Page } from "tns-core-modules/ui/page";
+import { AlertDialogService } from "../controller/alertdialog.service";
 import { req_barang } from "../controller/barang";
 import { Barang } from "../model/barang";
 
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
     data = []
 
     constructor(private page: Page, private routerExtensions: RouterExtensions,
-        private route: ActivatedRoute,) {
+        private route: ActivatedRoute, private alertDialogService: AlertDialogService) {
         this.page.actionBarHidden = true;
         this.route.queryParams.subscribe(params => {
             console.log(params);
@@ -28,10 +29,11 @@ export class HomeComponent implements OnInit {
 
     async ngOnInit() {
         var result = await req_barang(this.temp)
-        if (result != false) {
+        if (result != false && result.message != "Barang not Listed") {
             var temp = result.data
             var i = 0;
-            temp.map((obj=>{
+            temp.map((obj => {
+                obj['qty'] = 0
                 obj['list_id'] = i
                 i++
             }))
@@ -40,7 +42,7 @@ export class HomeComponent implements OnInit {
 
             this.data = temp
         } else {
-            this.alert("Akun anda tidak ditemukan.");
+            this.alertDialogService.alert("Barang","Data barang tidak ditemukan.");
         }
         // this.data.push({ text: "Bulbasaur", src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" });
         // this.data.push({ text: "Ivysaur", src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png" });
@@ -66,7 +68,13 @@ export class HomeComponent implements OnInit {
     toDetail(id) {
         console.log(id);
 
-        // var dataDetail = this.data[id]
+        var dataDetail = this.data[id]
+        this.routerExtensions.navigate(['/detail'], {
+            queryParams: {
+                "id_gudang": this.temp.id,
+                "data": JSON.stringify(dataDetail)
+            }
+        });
         // for (let index = 0; index < this.dataOrder.length; index++) {
         //     if (this.dataOrder[index].id == dataDetail.id) {
         //         dataDetail.qty = this.dataOrder[index].qty
@@ -87,15 +95,20 @@ export class HomeComponent implements OnInit {
         // });
     }
 
-    incdec(category, id) {
+    incdec(category, id, stock) {
         if (category == 0) {
             if (this.data[id].qty > 0) {
-                this.data[id + 1].qty -= 1
+                this.data[id].qty -= 1
                 // this.updateOrder(id, this.data[id].qty)
             }
         }
         else {
-            this.data[id + 1].qty += 1
+            if (this.data[id].qty >= stock) {
+                this.alertDialogService.alert(this.data[id].name, "Sudah melebihi limit Stock.");
+                this.data[id].qty = stock;
+            }else{
+                this.data[id].qty += 1
+            }
             // this.updateOrder(id, this.data[id].qty)
         }
     }
@@ -134,13 +147,5 @@ export class HomeComponent implements OnInit {
 
     getWidth(percentage) {
         return platform.screen.mainScreen.widthDIPs * percentage / 100
-    }
-
-    alert(message: string) {
-        return alert({
-            title: "INVENTARIS",
-            okButtonText: "OK",
-            message: message
-        });
     }
 }
