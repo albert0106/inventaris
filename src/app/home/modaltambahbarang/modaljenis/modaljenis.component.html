@@ -1,0 +1,14 @@
+<GridLayout>
+    <ScrollView height="100%">
+        <StackLayout>
+            <StackLayout *ngFor="let item of data">
+                <StackLayout style="margin: 5; text-align: center;" (tap)="onItemTap(item)">
+                    <Label [text]="item.name" style="font-size: 18;"></Label>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+    <StackLayout [top]="getHeight(35)" width="100%" orientation="horizontal" horizontalAlignment="center">
+        <ActivityIndicator [busy]="processing"></ActivityIndicator>
+    </StackLayout>
+</GridLayout>

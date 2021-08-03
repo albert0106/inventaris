@@ -1,0 +1,27 @@
+<StackLayout>
+    <StackLayout class="actionbarRed" orientation="vertical">
+        <StackLayout [height]='getHeight(8)' orientation="horizontal" horizontalalignment="center">
+            <Label class="modaltambahbarang" text="Tambah Stok" style="font-size: large; color: white;"
+                verticalalignment="Center"></Label>
+        </StackLayout>
+    </StackLayout>
+
+    <GridLayout rows="*, auto">
+        <StackLayout row="0" orientation=vertical>
+            <StackLayout orientation=vertical>
+                <Label text="Stok" class="textModal" [fontSize]="getHeight(2)"></Label>
+                <TextField [(ngModel)]="model.stok" keyboardType="number" returnKeyType="done"
+                    [fontSize]="getHeight(2)"></TextField>
+            </StackLayout>
+            <StackLayout orientation=vertical>
+                <Label text="Tanggal Kadaluarsa" class="textModal" [fontSize]="getHeight(2)"></Label>
+                <TextField (tap)="onTap()" [(ngModel)]="model.tanggal" editable="false" [fontSize]="getHeight(2)">
+                </TextField>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout row="1" class="button-Selected font-bold" (tap)="save()">
+            <Label text="TAMBAH"></Label>
+        </StackLayout>
+        <ActivityIndicator rowSpan="2" [busy]="processing"></ActivityIndicator>
+    </GridLayout>
+</StackLayout>

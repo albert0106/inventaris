@@ -1,0 +1,7 @@
+<StackLayout height="100%">
+    <DatePicker (loaded)="onPickerLoaded($event)" (dateChange)="onDateChanged($event)"
+        (dayChange)="onDayChanged($event)" (monthChange)="onMonthChanged($event)" (yearChange)="onYearChanged($event)"
+        verticalAlignment="center"></DatePicker>
+
+    <Button width="100%" (tap)="pilih()" text="PILIH" class="button-Selected font-bold"></Button>
+</StackLayout>

@@ -6,18 +6,35 @@
         </StackLayout>
     </StackLayout>
 
-    <StackLayout orientation=vertical>
-        <StackLayout orientation=vertical>
-            <Label text="Nama Barang" class="textModal" [fontSize]="getHeight(2)"></Label>
-            <textfield></textfield>
+    <GridLayout rows="*, auto">
+        <StackLayout row="0" orientation=vertical>
+            <StackLayout orientation=vertical>
+                <Label text="Nama Barang" class="textModal" [fontSize]="getHeight(2)"></Label>
+                <TextField [(ngModel)]="model.nama_barang" returnKeyType="next" [fontSize]="getHeight(2)"></TextField>
+            </StackLayout>
+            <StackLayout orientation=vertical>
+                <Label text="Stok" class="textModal" [fontSize]="getHeight(2)"></Label>
+                <TextField [(ngModel)]="model.stok" keyboardType="number" returnKeyType="next" [fontSize]="getHeight(2)"></TextField>
+            </StackLayout>
+            <StackLayout orientation=vertical>
+                <Label text="Harga" class="textModal" [fontSize]="getHeight(2)"></Label>
+                <TextField [(ngModel)]="model.price" keyboardType="number" returnKeyType="done"
+                    [fontSize]="getHeight(2)"></TextField>
+            </StackLayout>
+            <StackLayout orientation=vertical>
+                <Label text="Jenis Barang" class="textModal" [fontSize]="getHeight(2)"></Label>
+                <TextField (tap)="onTapJenis()" [(ngModel)]="model.jenis" editable="false"
+                    [fontSize]="getHeight(2)"></TextField>
+            </StackLayout>
+            <StackLayout orientation=vertical>
+                <Label text="Tanggal Kadaluarsa" class="textModal" [fontSize]="getHeight(2)"></Label>
+                <TextField (tap)="onTap()" [(ngModel)]="model.tanggal" editable="false" [fontSize]="getHeight(2)"></TextField>
+            </StackLayout>
         </StackLayout>
-        <StackLayout orientation=vertical>
-            <Label text="Stok" class="textModal" [fontSize]="getHeight(2)"></Label>
-            <textfield input type="number"></textfield>
+        <StackLayout row="1" class="button-Selected font-bold"
+            (tap)="save()">
+            <Label text="TAMBAH"></Label>
         </StackLayout>
-        <StackLayout orientation=vertical>
-            <Label text="Tanggal Kadaluarsa" class="textModal" [fontSize]="getHeight(2)"></Label>
-            <textfield input type="number" (tap)="onTap()"></textfield>
-        </StackLayout>
-    </StackLayout>
+        <ActivityIndicator rowSpan="2" [busy]="processing"></ActivityIndicator>
+    </GridLayout>
 </StackLayout>

@@ -1,0 +1,15 @@
+.modaltanggal {
+
+}
+.actionbarRed {
+    background-color: red;
+    /* color: black; */
+}
+
+.button-Selected{
+    height: 50;
+    vertical-align: center;
+    text-align: center;
+    background-color: #D51A1A;
+    color: #ffffff;
+  }

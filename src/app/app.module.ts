@@ -6,6 +6,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AlertDialogService } from "./controller/alertdialog.service";
 import { DetailComponent } from "./home/detail/detail.component";
+import { ModaltambahstockComponent } from "./home/detail/modaltambahstock/modaltambahstock.component";
+import { ModaljenisComponent } from "./home/modaltambahbarang/modaljenis/modaljenis.component";
+import { ModaltambahbarangComponent } from "./home/modaltambahbarang/modaltambahbarang.component";
+import { ModaltanggalComponent } from "./home/modaltambahbarang/modaltanggal/modaltanggal.component";
 import { LoginComponent } from "./login/login.component";
 import { ModalGudang } from "./login/modal-gudang/modal-gudang.component";
 
@@ -17,16 +21,23 @@ import { ModalGudang } from "./login/modal-gudang/modal-gudang.component";
         NativeScriptFormsModule,
         NativeScriptModule,
         AppRoutingModule,
-        DetailComponent,
     ],
     entryComponents: [
-        ModalGudang
+        ModalGudang,
+        ModaltambahbarangComponent,
+        ModaltanggalComponent,
+        ModaljenisComponent,
+        ModaltambahstockComponent,
     ],
     declarations: [
         ModalGudang,
         AppComponent,
         LoginComponent,
         DetailComponent,
+        ModaltambahbarangComponent,
+        ModaltanggalComponent,
+        ModaljenisComponent,
+        ModaltambahstockComponent,
     ],
     providers: [
         AlertDialogService,

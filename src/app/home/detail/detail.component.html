@@ -1,48 +1,32 @@
 <StackLayout>
-    <StackLayout class="actionbarRed" orientation="horizontal">
-        <StackLayout [height]='getHeight(8)' orientation="horizontal">
-            <Label text="+" style="font-size: large; color: white;" horizontalAlignment="right"></Label>
+    <StackLayout class="actionbarRed" orientation="vertical">
+        <StackLayout [height]='getHeight(8)' orientation="horizontal" horizontalalignment="right">
+            <Label text="&#xf055;" class="fa button" verticalalignment="bottom" [fontSize]="getHeight(3.5)"
+                style="margin: 5; padding: 5; color: aqua;" (tap)="onTap()"></Label>
         </StackLayout>
     </StackLayout>
 
     <Scrollview height="100%" paddingLeft="10" paddingRight="10">
-        <!-- <Listview [items]="data" height="100%"> -->
-        <!-- <ng-template let-item="item"> -->
-        <StackLayout>
-            <StackLayout *ngFor="let item of data">
-                <GridLayout width="100%" class="item" columns="*,auto">
-                    <StackLayout col="0" (tap)="toDetail(item.list_id)" padding="5">
-                        <Label [text]="item.name" class="font-name font-regular" [fontSize]="getHeight(2.2)"
-                            horizontalAlignment="center" textWrap="true"></Label>
+        <StackLayout paddingLeft="10" paddingRight="10">
+            <StackLayout *ngFor="let item of data_detail">
+                <GridLayout width="100%" class="item" rows="auto,auto" columns="*,auto">
+                    <StackLayout col="0" row="0" padding="5">
+                        <Label text="Tanggal Expired : {{item.expired_date}}" class="font-name font-regular" [fontSize]="getHeight(2.2)"
+                            horizontalAlignment="left" textWrap="true"></Label>
                     </StackLayout>
-                    <StackLayout col="1" orientation="horizontal" horizontalAlignment="right"
-                        [visibility]="!kirim ? 'visible' : 'collapsed'"
-                        style="width: 25%; border-left-width: 1; border-left-color: rgb(170, 170, 170)">
-                        <StackLayout (tap)="incdec(0,item.list_id,item.stock)" verticalAlignment="center" height="100%"
-                            width="30%">
-                            <Label text="-" horizontalAlignment="center" style="font-size: 14;"></Label>
-                        </StackLayout>
-                        <StackLayout verticalAlignment="center" height="100%" width="40%"
-                            style="border-left-width: 1; border-right-width: 1; border-color: rgb(170, 170, 170)">
-                            <Label [text]="item.qty" horizontalAlignment="center" class="font-regular"></Label>
-                        </StackLayout>
-                        <StackLayout (tap)="incdec(1,item.list_id,item.stock)" verticalAlignment="center" height="100%"
-                            width="30%">
-                            <Label text="+" horizontalAlignment="center" style="font-size: 14;"></Label>
-                        </StackLayout>
+                    <StackLayout col="0" row="1" padding="5">
+                        <Label text="Tanggal Masuk : {{item.date}} {{item.time}}" class="font-name font-regular" [fontSize]="getHeight(2.2)" horizontalAlignment="left"
+                            textWrap="true"></Label>
                     </StackLayout>
-                    <StackLayout col="1" orientation="horizontal" horizontalAlignment="right"
-                        [visibility]="kirim ? 'visible' : 'collapsed'"
-                        style="width: 25%; border-left-width: 1; border-left-color: rgb(170, 170, 170)">
-                        <StackLayout verticalAlignment="center" height="100%" width="100%">
-                            <Label text="Stok: {{item.stock}}" horizontalAlignment="center" textwrap="true"
-                                class="font-regular"></Label>
+                    <StackLayout col="1" rowSpan="2" orientation="horizontal" horizontalAlignment="right"
+                        style="width: 25%;">
+                        <StackLayout verticalAlignment="center" height="100%"
+                            width="30%">
+                            <Label id="btn{{item.list_id}}" text="-" horizontalAlignment="center" style="font-size: 20;" (tap)="openPopupMenu(item)"></Label>
                         </StackLayout>
                     </StackLayout>
                 </GridLayout>
             </StackLayout>
         </StackLayout>
-        <!-- </ng-template> -->
-        <!-- </Listview> -->
     </Scrollview>
 </StackLayout>
