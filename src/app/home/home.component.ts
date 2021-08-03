@@ -1,28 +1,37 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit,ViewContainerRef  } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
 import * as platform from "tns-core-modules/platform/platform";
 import { Page } from "tns-core-modules/ui/page";
 import { Barang } from "../model/barang";
+import { ModalDialogOptions, ModalDialogService } from "@nativescript/angular";
+import { ModaltambahbarangComponent } from "./modaltambahbarang/modaltambahbarang.component";
 
 @Component({
     selector: "Home",
+    providers:[ModalDialogService],
     templateUrl: "./home.component.html",
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
     data = new Array<Barang>(
-        { id: 1, nama: "Bulbasaur", qty: 0, harga: "10000" },
-        { id: 2, nama: "Ivysaur", qty: 0, harga: "10000"  },
-        { id: 3, nama: "Venusaur", qty: 0, harga: "10000"  },
-        { id: 4, nama: "Charmander", qty: 0, harga: "10000"  },
+        { id: 1, nama: "Bulbasaur", qty: 10, harga: "10000" },
+        { id: 2, nama: "Ivysaur", qty: 10, harga: "10000"  },
+        { id: 3, nama: "Venusaur", qty: 10, harga: "10000"  },
+        { id: 4, nama: "Charmander", qty: 100, harga: "10000"  },
     );
 
-    constructor(private page: Page, private routerExtensions: RouterExtensions) {
+    constructor(private page: Page, private routerExtensions: RouterExtensions,
+        private _modalService: ModalDialogService,private _vcRef : ViewContainerRef) {
         this.page.actionBarHidden = true;
+       
+        
         // Use the component constructor to inject providers.
     }
+    
 
     ngOnInit(): void {
+        console.log("test 12345")
+
         // this.data.push({ text: "Bulbasaur", src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" });
         // this.data.push({ text: "Ivysaur", src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png" });
         // this.data.push({ text: "Venusaur", src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png" });
@@ -42,6 +51,19 @@ export class HomeComponent implements OnInit {
         // this.data.push({ id: 2, text: "Ivysaur", qty: 0, harga: 'Rp 119000', src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png" });
         // this.data.push({ id: 3, text: "Venusaur", qty: 0, harga: 'Rp 119000', src: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png" });
         // Init your component properties here.
+    }
+
+    onTap(): void {
+        const options: ModalDialogOptions = {
+            viewContainerRef: this._vcRef,
+            context: {},
+            fullscreen: true
+        };
+
+        this._modalService.showModal(ModaltambahbarangComponent, options)
+            .then((result: string) => {
+                console.log(result);
+            });
     }
 
     toDetail(id) {
@@ -115,5 +137,9 @@ export class HomeComponent implements OnInit {
 
     getWidth(percentage) {
         return platform.screen.mainScreen.widthDIPs * percentage / 100
+    }
+
+    ModalTambah(){
+        console.log("test berhasil !!");
     }
 }

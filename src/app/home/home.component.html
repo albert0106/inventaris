@@ -1,7 +1,9 @@
 <StackLayout>
-    <StackLayout class="actionbarRed" orientation="horizontal" >
-        <StackLayout [height]='getHeight(8)' orientation="horizontal">
-            <Label text="&#xf060;" class="fa" horizontalAlignment="right"></Label>
+    <StackLayout class="actionbarRed" orientation="vertical" >
+        <StackLayout [height]='getHeight(10)' orientation="horizontal" horizontalalignment="right">
+            <Label text="&#xf055;"  class="fa button" verticalalignment="bottom"  [fontSize]="getHeight(3.5)" (tap)="ModalTambah()"
+                   style="margin: 5; padding: 5; color: aqua;;"></Label>
+                   <Button text="SHOW MODAL" (tap)="onTap()"></Button>
         </StackLayout>
     </StackLayout>
 
@@ -12,25 +14,31 @@
                 <Image row="0" col="0" [src]="item.src" class="thumb img-circle"></Image>
                 <Label row="0" col="1" [text]="item.text" textWrap="true"></Label>
             </GridLayout> -->
-            <StackLayout *ngFor="let item of data" height="100%">
-                <StackLayout marginTop="10" class="item" orientation="horizontal">
-                    <StackLayout (tap)="toDetail(item.id)" padding="5">
-                        <Label [text]="item.nama" class="font-name font-regular" [fontSize]="getHeight(2.2)"
-                            horizontalAlignment="center" textWrap="true"></Label>
+            <StackLayout>
+                <StackLayout *ngFor="let item of data" height="100%">
+                    <StackLayout marginTop="10" class="item" orientation="horizontal" style="background-color:burlywood;">
+                        <!-- <StackLayout (tap)="toDetail(item.id)" padding="5"> -->
+                            <Label [text]="item.nama" class="font-name font-regular" [fontSize]="getHeight(2.2)"
+                                horizontalAlignment="center" textWrap="true" padding="10"></Label>
+                            <Label text="Stok : {{item.qty}}" class="font-name font-regular" [fontSize]="getHeight(2.2)"
+                                horizontalAlignment="center" textWrap="true" padding="10" margin-left=100></Label>
+                            <!-- <Label text="&#xf142;" class="fa font-name font-regular" [fontSize]="getHeight(2.2)"
+                                horizontalAlignment="center" textWrap="true" padding="10" margin-left=100></Label> -->
+                        <!-- </StackLayout> -->
+                        <!-- <StackLayout orientation="horizontal" horizontalAlignment="center"
+                            style="width: 100%; border-top-width: 1; border-top-color: rgb(170, 170, 170)">
+                            <StackLayout (tap)="incdec(0,item.id)" verticalAlignment="center" height="100%" width="30%">
+                                <Label text="-" horizontalAlignment="center" class="font-regular"></Label>
+                            </StackLayout>
+                            <StackLayout verticalAlignment="center" height="100%" width="35%"
+                                style="border-left-width: 1; border-right-width: 1; border-color: rgb(170, 170, 170)">
+                                <Label [text]="item.qty" horizontalAlignment="center" class="font-regular"></Label>
+                            </StackLayout>
+                            <StackLayout (tap)="incdec(1,item.id)" verticalAlignment="center" height="100%" width="30%">
+                                <Label text="+" horizontalAlignment="center" class="font-regular"></Label>
+                            </StackLayout>
+                        </StackLayout> -->
                     </StackLayout>
-                    <!-- <StackLayout orientation="horizontal" horizontalAlignment="center"
-                        style="width: 100%; border-top-width: 1; border-top-color: rgb(170, 170, 170)">
-                        <StackLayout (tap)="incdec(0,item.id)" verticalAlignment="center" height="100%" width="30%">
-                            <Label text="-" horizontalAlignment="center" class="font-regular"></Label>
-                        </StackLayout>
-                        <StackLayout verticalAlignment="center" height="100%" width="35%"
-                            style="border-left-width: 1; border-right-width: 1; border-color: rgb(170, 170, 170)">
-                            <Label [text]="item.qty" horizontalAlignment="center" class="font-regular"></Label>
-                        </StackLayout>
-                        <StackLayout (tap)="incdec(1,item.id)" verticalAlignment="center" height="100%" width="30%">
-                            <Label text="+" horizontalAlignment="center" class="font-regular"></Label>
-                        </StackLayout>
-                    </StackLayout> -->
                 </StackLayout>
             </StackLayout>
 

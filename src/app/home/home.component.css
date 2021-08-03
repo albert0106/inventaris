@@ -1,6 +1,6 @@
 .actionbarRed {
-  background-color: #D51A1A;
-  color: white;
+  background-color: red;
+  /* color: black; */
 }
 
 .actionbar {
@@ -64,11 +64,10 @@
   vertical-align: bottom;
 }
 .button{
-  width: 100%;
   background-color: #034f84;
-  color: white;
-  vertical-align: center;
-  text-align: center;
+  /* color: rgb(3, 3, 3); */
+  /* vertical-align: center; */
+  text-align: right;
 }
 .confirm{
   font-weight: bold;
@@ -78,5 +77,9 @@
   vertical-align: center;
   text-align: center;
   background-color: #034f84;
-  color: #ffffff;
+  /* color: black; */
 }
+
+/* .fa{
+  font-family: fa-regular-400; 
+} */
