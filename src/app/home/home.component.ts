@@ -151,12 +151,10 @@ export class HomeComponent implements OnInit {
                 isExists = true
                 if (qty > 0) {
                     this.dataOrder[index].qty = qty
-                    this.data_kirim[index].qty = qty
                     this.dataOrder[index].price = this.data[list_id].price * qty
                 }
                 else {
                     this.dataOrder.splice(index, 1);
-                    this.data_kirim.splice(index, 1);
                 }
                 break
             }
@@ -169,11 +167,6 @@ export class HomeComponent implements OnInit {
                 price: this.data[list_id].price,
                 id_barang: this.data[list_id].id,
                 list_id: list_id,
-                stock: this.data[list_id].stock
-            })
-            this.data_kirim.push({
-                qty: qty,
-                id_barang: this.data[list_id].id,
                 stock: this.data[list_id].stock
             })
 
@@ -200,12 +193,12 @@ export class HomeComponent implements OnInit {
 
         confirm(options).then(async (result) => {
             if (result == true) {
-                var kirim = await kirim_konter(this.data_kirim)
+                var kirim = await kirim_konter(this.dataOrder)
                 if (kirim != false) {
                     var res = kirim.data
-                    // if (res == true) {
+                    if (res == true) {
                         this.alertDialogService.alert("KIRIM", "Barang sudah dikirim ke konter")
-                    // }
+                    }
                 } else {
                     this.alertDialogService.alert("KIRIM", "Barang gagal dikirim ke konter")
                 }
