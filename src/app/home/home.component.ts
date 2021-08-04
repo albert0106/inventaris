@@ -4,10 +4,11 @@ import { RouterExtensions } from "nativescript-angular/router";
 import * as platform from "tns-core-modules/platform/platform";
 import { Page } from "tns-core-modules/ui/page";
 import { AlertDialogService } from "../controller/alertdialog.service";
-import { req_barang } from "../controller/barang";
+import { kirim_konter, req_barang } from "../controller/barang";
 import { Barang } from "../model/barang";
 import { ModalDialogOptions, ModalDialogService } from "@nativescript/angular";
 import { ModaltambahbarangComponent } from "./modaltambahbarang/modaltambahbarang.component";
+import { confirm } from "tns-core-modules/ui/dialogs";
 
 @Component({
     selector: "Home",
@@ -104,7 +105,7 @@ export class HomeComponent implements OnInit {
             this.order = false;
             this.isKirim = true;
         }else{
-            this.alertDialogService.alert2("KIRIM","Apakah anda yakin akan mengirim stok ini?")
+            this.alert2("KIRIM","Apakah anda yakin akan mengirim stok ini?")
         }
     }
 
@@ -138,7 +139,7 @@ export class HomeComponent implements OnInit {
                 qty: qty,
                 name: this.data[list_id].name,
                 price: this.data[list_id].price,
-                id: this.data[list_id].id,
+                id_barang: this.data[list_id].id,
                 list_id: list_id,
                 stock: this.data[list_id].stock
             })
@@ -153,5 +154,31 @@ export class HomeComponent implements OnInit {
 
     getWidth(percentage) {
         return platform.screen.mainScreen.widthDIPs * percentage / 100
+    }
+
+    public alert2(txtTitle, txtMessage) {
+        let options = {
+            title: txtTitle,
+            message: txtMessage,
+            okButtonText: "YAKIN?",
+            neutralButtonText: "BELUM",
+            cancelable: false
+        };
+
+        confirm(options).then(async (result) => {
+            if (result == true) {
+                var kirim = await kirim_konter(this.dataOrder)
+                if (kirim != false) {
+                    var res = kirim.data
+                    if (res == true) {
+                        this.alertDialogService.alert("KIRIM", "Barang sudah dikirim ke konter")
+                    }
+                } else {
+                    this.alertDialogService.alert("KIRIM", "Barang gagal dikirim ke konter")
+                }
+            } else {
+                console.log("belum transfer!");
+            }
+        });
     }
 }

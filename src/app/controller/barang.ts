@@ -259,10 +259,9 @@ export async function kirim_konter(data): Promise<any> {
     var URL = "https://mystal.xyz/ronaldiman/apis/kirim_konter.php";
 
     var body = {
-        data : [
-            {}
-        ]
+        data : data
     }
+    console.log(body);
 
     return new Promise((resolve, reject) => {
         request({
@@ -275,6 +274,7 @@ export async function kirim_konter(data): Promise<any> {
             content: JSON.stringify(body)
         })
             .then((response) => {
+                console.log(response);
                 try {
                     if (response.statusCode == 200) {
                         var data = JSON.parse(JSON.stringify(response.content))
