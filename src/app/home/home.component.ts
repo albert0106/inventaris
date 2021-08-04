@@ -9,6 +9,7 @@ import { Barang } from "../model/barang";
 import { ModalDialogOptions, ModalDialogService } from "@nativescript/angular";
 import { ModaltambahbarangComponent } from "./modaltambahbarang/modaltambahbarang.component";
 import { confirm } from "tns-core-modules/ui/dialogs";
+import { ScrollEventData } from "tns-core-modules";
 
 @Component({
     selector: "Home",
@@ -22,6 +23,10 @@ export class HomeComponent implements OnInit {
     temp;
     data = []
     dataOrder = []
+    data_kirim= []
+    direction;
+    scrollY;
+    processing = false;
 
     constructor(private page: Page, private routerExtensions: RouterExtensions,
         private route: ActivatedRoute, private alertDialogService: AlertDialogService,
@@ -35,8 +40,10 @@ export class HomeComponent implements OnInit {
     }
 
     async ngOnInit() {
+        this.processing = true;
         var result = await req_barang(this.temp)
         if (result != false && result.message != "Barang not Listed") {
+            this.processing = false
             var temp = result.data
             var i = 0;
             temp.map((obj => {
@@ -49,9 +56,28 @@ export class HomeComponent implements OnInit {
 
             this.data = temp
         } else {
+            this.processing = false
             this.alertDialogService.alert("Barang","Data barang tidak ditemukan.");
         }
         // Init your component properties here.
+    }
+
+    onScroll(args: ScrollEventData) {
+        this.scrollY = args.scrollY;
+    }
+
+    onSwipe(args) {
+        this.direction = args.direction;
+        console.log("=======Swipe Direction=======" + this.direction);
+        console.log("=======scrollY=======" + this.scrollY);
+        if (this.scrollY == undefined && this.direction == 8) {
+            this.processing = true
+            this.ngOnInit();
+        } else if (this.scrollY == 0 && this.direction == 8){
+            this.processing = true
+            this.ngOnInit();
+        }
+
     }
 
     onTap(): void {
@@ -125,10 +151,12 @@ export class HomeComponent implements OnInit {
                 isExists = true
                 if (qty > 0) {
                     this.dataOrder[index].qty = qty
+                    this.data_kirim[index].qty = qty
                     this.dataOrder[index].price = this.data[list_id].price * qty
                 }
                 else {
                     this.dataOrder.splice(index, 1);
+                    this.data_kirim.splice(index, 1);
                 }
                 break
             }
@@ -141,6 +169,11 @@ export class HomeComponent implements OnInit {
                 price: this.data[list_id].price,
                 id_barang: this.data[list_id].id,
                 list_id: list_id,
+                stock: this.data[list_id].stock
+            })
+            this.data_kirim.push({
+                qty: qty,
+                id_barang: this.data[list_id].id,
                 stock: this.data[list_id].stock
             })
 
@@ -167,12 +200,12 @@ export class HomeComponent implements OnInit {
 
         confirm(options).then(async (result) => {
             if (result == true) {
-                var kirim = await kirim_konter(this.dataOrder)
+                var kirim = await kirim_konter(this.data_kirim)
                 if (kirim != false) {
                     var res = kirim.data
-                    if (res == true) {
+                    // if (res == true) {
                         this.alertDialogService.alert("KIRIM", "Barang sudah dikirim ke konter")
-                    }
+                    // }
                 } else {
                     this.alertDialogService.alert("KIRIM", "Barang gagal dikirim ke konter")
                 }

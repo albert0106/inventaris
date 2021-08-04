@@ -6,7 +6,7 @@
         </StackLayout>
     </StackLayout>
     <GridLayout rows="*, auto">
-        <Scrollview row="0" height="100%" paddingLeft="10" paddingRight="10">
+        <Scrollview row="0" height="100%" paddingLeft="10" paddingRight="10" (swipe)="onSwipe($event)" (scroll)="onScroll($event)">
             <StackLayout>
                 <StackLayout *ngFor="let item of data">
                     <GridLayout width="100%" class="item" columns="*,auto">
@@ -46,6 +46,7 @@
             <Button (tap)="batal()" text="BATAL" [visibility]="isKirim ? 'visible' : 'collapsed'" class="button font-bold"></Button>
             <Button (tap)="kirim()" text="KIRIM" class="button-Selected font-bold"></Button>
         </StackLayout>
+        <ActivityIndicator rowSpan="2" [busy]="processing"></ActivityIndicator>
     </GridLayout>
     <!-- <AbsoluteLayout height="100%" width="100%">
         <Button></Button>
