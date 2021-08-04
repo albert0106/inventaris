@@ -7,6 +7,7 @@ import { hapus, req_barang, req_detail_barang } from '~/app/controller/barang';
 import * as platform from "tns-core-modules/platform/platform";
 import { Menu } from "nativescript-menu";
 import { ModaltambahstockComponent } from './modaltambahstock/modaltambahstock.component';
+import { ModaleditComponent } from './modaledit/modaledit.component';
 @Component({
 	moduleId: module.id,
 	selector: 'detail',
@@ -88,6 +89,21 @@ export class DetailComponent implements OnInit {
                         this.alertDialogService.alert("HAPUS", "Data sudah terhapus");
                         this.ngOnInit()
                     }
+                }
+                else if (value.title == "Edit") {
+                    const options: ModalDialogOptions = {
+                        viewContainerRef: this._vcRef,
+                        context: { id_detil : item.id , id_barang: this.data.id },
+                        fullscreen: true
+                    };
+
+                    this._modalService.showModal(ModaleditComponent, options)
+                        .then((result: any) => {
+                            console.log(result);
+                            if (result == true) {
+                                this.ngOnInit()
+                            }
+                        });
                 }
             })
     }

@@ -25,4 +25,21 @@ export class AlertDialogService {
         });
     }
 
+    public alert2(txtTitle, txtMessage) {
+        let options = {
+            title: txtTitle,
+            message: txtMessage,
+            okButtonText: "YAKIN?",
+            neutralButtonText: "BELUM",
+            cancelable: false
+        };
+
+        confirm(options).then((result) => {
+            if (result == true) {
+            } else {
+                console.log("belum transfer!");
+            }
+        });
+    }
+
 }

@@ -16,9 +16,11 @@ import { ModaltambahbarangComponent } from "./modaltambahbarang/modaltambahbaran
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    kirim = true;
+    isKirim = false;
+    order = true;
     temp;
     data = []
+    dataOrder = []
 
     constructor(private page: Page, private routerExtensions: RouterExtensions,
         private route: ActivatedRoute, private alertDialogService: AlertDialogService,
@@ -77,31 +79,13 @@ export class HomeComponent implements OnInit {
                 "data": JSON.stringify(dataDetail)
             }
         });
-        // for (let index = 0; index < this.dataOrder.length; index++) {
-        //     if (this.dataOrder[index].id == dataDetail.id) {
-        //         dataDetail.qty = this.dataOrder[index].qty
-        //     }
-        // }
-
-        // let options = {
-        //     context: { data: JSON.stringify(dataDetail) },
-        //     fullscreen: true,
-        //     viewContainerRef: this.vcRef
-        // };
-        // this.modal.showModal(ModalK24Detail, options).then((res: string) => {
-        //     if (res) {
-        //         var result = JSON.parse(res)
-        //         this.updateOrder(result.id, result.qty)
-        //         this.data[id].qty = result.qty
-        //     }
-        // });
     }
 
     incdec(category, id, stock) {
         if (category == 0) {
             if (this.data[id].qty > 0) {
                 this.data[id].qty -= 1
-                // this.updateOrder(id, this.data[id].qty)
+                this.updateOrder(id, this.data[id].qty)
             }
         }
         else {
@@ -110,38 +94,58 @@ export class HomeComponent implements OnInit {
                 this.data[id].qty = stock;
             }else{
                 this.data[id].qty += 1
+                this.updateOrder(id, this.data[id].qty)
             }
-            // this.updateOrder(id, this.data[id].qty)
         }
     }
 
-    // updateOrder(id, qty) {
-    //     var isExists = false
-    //     for (let index = 0; index < this.dataOrder.length; index++) {
-    //         console.log("this.dataOrder[index].id => " + this.dataOrder[index].id)
-    //         console.log("id => " + id)
-    //         if (this.dataOrder[index].id == id) {
-    //             isExists = true
-    //             if (qty > 0) {
-    //                 this.dataOrder[index].qty = qty
-    //                 this.dataOrder[index].price = this.data[id].price * qty
-    //             }
-    //             else {
-    //                 this.dataOrder.splice(index, 1);
-    //             }
-    //             break
-    //         }
-    //     }
+    kirim(){
+        if(this.isKirim == false){
+            this.order = false;
+            this.isKirim = true;
+        }else{
+            this.alertDialogService.alert2("KIRIM","Apakah anda yakin akan mengirim stok ini?")
+        }
+    }
 
-    //     if (!isExists) {
-    //         this.dataOrder.push({
-    //             qty: qty,
-    //             name: this.data[id].name,
-    //             price: this.data[id].price,
-    //             id: id
-    //         })
-    //     }
-    // }
+    batal(){
+        this.isKirim=false;
+        this.order=true;
+    }
+
+    updateOrder(list_id, qty) {
+        var isExists = false
+        for (let index = 0; index < this.dataOrder.length; index++) {
+            console.log("this.dataOrder[index].id => " + this.dataOrder[index].id)
+            console.log("id => " + list_id)
+            console.log("data => " + JSON.stringify(this.dataOrder))
+            if (this.dataOrder[index].list_id == list_id) {
+                console.log("masuk");
+                isExists = true
+                if (qty > 0) {
+                    this.dataOrder[index].qty = qty
+                    this.dataOrder[index].price = this.data[list_id].price * qty
+                }
+                else {
+                    this.dataOrder.splice(index, 1);
+                }
+                break
+            }
+        }
+
+        if (!isExists) {
+            this.dataOrder.push({
+                qty: qty,
+                name: this.data[list_id].name,
+                price: this.data[list_id].price,
+                id: this.data[list_id].id,
+                list_id: list_id,
+                stock: this.data[list_id].stock
+            })
+
+            console.log("data !isExist => " + JSON.stringify(this.dataOrder))
+        }
+    }
 
     getHeight(percentage) {
         return platform.screen.mainScreen.heightDIPs * percentage / 100

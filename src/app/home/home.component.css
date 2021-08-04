@@ -67,9 +67,9 @@
 }
 .button{
   background-color: #034f84;
-  /* color: rgb(3, 3, 3); */
-  /* vertical-align: center; */
-  text-align: right;
+  vertical-align: center;
+  text-align: center;
+  color: #ffffff;
 }
 .confirm{
   font-weight: bold;
@@ -82,6 +82,10 @@
   /* color: black; */
 }
 
-/* .fa{
-  font-family: fa-regular-400;
-} */
+.button-Selected{
+    height: 50;
+    vertical-align: center;
+    text-align: center;
+    background-color: #D51A1A;
+    color: #ffffff;
+  }

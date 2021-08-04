@@ -6,6 +6,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AlertDialogService } from "./controller/alertdialog.service";
 import { DetailComponent } from "./home/detail/detail.component";
+import { ModaleditComponent } from "./home/detail/modaledit/modaledit.component";
 import { ModaltambahstockComponent } from "./home/detail/modaltambahstock/modaltambahstock.component";
 import { ModaljenisComponent } from "./home/modaltambahbarang/modaljenis/modaljenis.component";
 import { ModaltambahbarangComponent } from "./home/modaltambahbarang/modaltambahbarang.component";
@@ -28,6 +29,7 @@ import { ModalGudang } from "./login/modal-gudang/modal-gudang.component";
         ModaltanggalComponent,
         ModaljenisComponent,
         ModaltambahstockComponent,
+        ModaleditComponent,
     ],
     declarations: [
         ModalGudang,
@@ -38,6 +40,7 @@ import { ModalGudang } from "./login/modal-gudang/modal-gudang.component";
         ModaltanggalComponent,
         ModaljenisComponent,
         ModaltambahstockComponent,
+        ModaleditComponent,
     ],
     providers: [
         AlertDialogService,
